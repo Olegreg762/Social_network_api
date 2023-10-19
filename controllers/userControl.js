@@ -1,5 +1,4 @@
 const {User, Thought} = require('../models');
-const { findOneAndDelete } = require('../models/User');
 
 module.exports = {
     async getAllUsers(req, res) {
@@ -12,7 +11,7 @@ module.exports = {
     },
     async getOneUser (req, res) {
         try {
-            const user = User.findOne({_id: req.params.id}).populate({path: "thoughts", select: "-__v"})
+            const user = await User.findOne({_id: req.params.id}).populate({path: "thoughts", select: "-__v"})
             res.status(200).json(user)
         } catch (error) {
             res.status(500).json(error)
@@ -20,7 +19,7 @@ module.exports = {
     },
     async createUser(req, res) {
         try {
-            const newUser =User.create(req.body)
+            const newUser = await User.create(req.body)
             res.status(200).json(newUser)
         } catch (error) {
             res.status(500).json(error)
@@ -28,7 +27,7 @@ module.exports = {
     },
     async updateUser(req, res) {
         try {
-            const user = User.findByOneAndUpdate(
+            const user = await User.findByOneAndUpdate(
                 {_id: req.params.id},
                 {$set: req.body},
                 {new: true, runValidators: true}
@@ -40,21 +39,32 @@ module.exports = {
     },
     async deleteUser(req, res) {
         try {
-            const user = findOneAndDelete({_id: req.param.id})
+            const user = await User.findOneAndDelete({_id: req.param.id})
             res.status(200).json(user)
         } catch (error) {
             res.status(500).json(error)
         }
     },
-
     async addFriend(req, res) {
         try {
-            const friend = User.findOneAndUpdate(
+            const friend = await User.findOneAndUpdate(
                 {_id: req.params.userId},
                 {$addToSet: {friends: req.params.friendId}},
                 {new: true}
             )
             res.status(200).json(friend)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    },
+    async deleteFriend(req, res) {
+        try {
+            const delFriend = await User.findOneAndUpdate(
+                {_id: req.params.userId},
+                {$pull: {friends: req.params.friendId}},
+                {new: true}
+            )
+            res.status(200).json(delFriend)
         } catch (error) {
             res.status(500).json(error)
         }

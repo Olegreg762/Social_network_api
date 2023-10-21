@@ -47,15 +47,28 @@ module.exports = {
     },
     async addFriend(req, res) {
         try {
-            const friend = await User.findOneAndUpdate(
-                {_id: req.params.userId},
-                {$addToSet: {friends: req.params.friendId}},
-                {new: true}
-            )
-            res.status(200).json(friend)
+            const user = await User.findOne({_id: req.params.userId});
+            const friend = await User.findOne({_id: req.params.friendId});
+            if(!user.friends.includes(friend._id) || !friend.friends.includes(user._id)){
+                const newFriend1 = await User.findOneAndUpdate(
+                    {_id: req.params.userId},
+                    {$push: {friends: req.params.friendId}},
+                    {new: true}
+                )
+                
+                const newFriend2 = await User.findOneAndUpdate(
+                    {_id: req.params.friendId},
+                    {$push: {friends: req.params.userId}},
+                    {new: true}
+                )
+                res.status(200).json(newFriend1)
+            } else{
+                res.status(200).json({message:"Already Friends"})
+            }
         } catch (error) {
             res.status(500).json(error)
         }
+    
     },
     async deleteFriend(req, res) {
         try {
@@ -64,13 +77,14 @@ module.exports = {
                 {$pull: {friends: req.params.friendId}},
                 {new: true}
             )
+            const delFriend2 = await User.findOneAndUpdate(
+                {_id: req.params.friendId},
+                {$pull: {friends: req.params.userId}},
+                {new: true}
+            )
             res.status(200).json(delFriend)
         } catch (error) {
             res.status(500).json(error)
         }
     }
 }
-
-// 65332d536dc0f4b0ccbce6e1
-
-// 653329927d14e9afc8f63da2

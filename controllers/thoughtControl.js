@@ -50,7 +50,7 @@ module.exports = {
                 {_id: req.params.id}
             );
             const user = await User.findOneAndUpdate(
-                {thoughts: req.params.thoughtId},
+                {thoughts: req.params.id},
                 {$pull: {thoughts: req.params.thoughtId}},
                 {new: true}
             );

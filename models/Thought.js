@@ -8,7 +8,7 @@ dateFormat= (dateTime) => {
 
 const thoughtSchema = new Schema(
     {
-        thoughText: {
+        thoughtText: {
             type: String,
             required: true,
             minlength: 1,

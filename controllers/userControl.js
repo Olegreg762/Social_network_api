@@ -27,7 +27,7 @@ module.exports = {
     },
     async updateUser(req, res) {
         try {
-            const user = await User.findByOneAndUpdate(
+            const user = await User.findOneAndUpdate(
                 {_id: req.params.id},
                 {$set: req.body},
                 {new: true, runValidators: true}
@@ -39,7 +39,7 @@ module.exports = {
     },
     async deleteUser(req, res) {
         try {
-            const user = await User.findOneAndDelete({_id: req.param.id})
+            const user = await User.findOneAndDelete({_id: req.params.id})
             res.status(200).json(user)
         } catch (error) {
             res.status(500).json(error)
@@ -70,3 +70,7 @@ module.exports = {
         }
     }
 }
+
+// 65332d536dc0f4b0ccbce6e1
+
+// 653329927d14e9afc8f63da2

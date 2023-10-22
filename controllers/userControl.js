@@ -3,7 +3,7 @@ const {User, Thought} = require('../models');
 module.exports = {
     async getAllUsers(req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find().populate({path: "thoughts", select: "-__v"});
             res.status(202).json(users);
         } catch (error) {
             res.status(500).json(error)

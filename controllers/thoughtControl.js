@@ -63,7 +63,7 @@ module.exports = {
         try {
           const reaction = await Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
-            { $: {reactions: req.body}},
+            { $push: {reactions: req.body}},
             {new: true, runValidators: true}
           );
           res.status(200).json(reaction);
@@ -75,7 +75,7 @@ module.exports = {
         try {
           const reaction = await Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
-            { $: {reactions: {id: req.params.id}}},
+            { $pull: {reactions: {id: req.params.id}}},
             {new: true, runValidators: true}
           );
           res.status(200).json(reaction);

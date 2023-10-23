@@ -22,6 +22,12 @@
         <source src="./screenrecord.mov"/>
     </video>
     <script>
+        function reloadAndPlayVideo() {
+            setTimeout(function () {
+                location.reload();
+            }, 100);
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             setTimeout(function () {
                 var video = document.getElementById("Video");

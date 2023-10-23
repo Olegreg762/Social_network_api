@@ -18,8 +18,18 @@
     }
 </style>
 <body>
-    <video controls autoplay muted>
-        <source src="./screenrecording.mov"/>
+    <video controls muted id="Video">
+        <source src="./screenrecord.mov"/>
     </video>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(function () {
+                var video = document.getElementById("Video");
+                video.play();
+            }, 5);
+        });
+    </script>
+
 </body>
+
 </html>

@@ -5,6 +5,8 @@
   
   API that controls the back end of Social Network
 
+  ![acreenshot](./images/screenshot.png)
+
   ## Table of Contents
   * [Installation](#installation)
   * [Usage](#usage)

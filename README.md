@@ -5,7 +5,7 @@
   
   API that controls the back end of Social Network
 
-  ![acreenshot](./images/screenshot.png)
+  [![acreenshot](./images/screenshot.png)](https://olegreg762.github.io/Social_network_api/)
 
   ## Table of Contents
   * [Installation](#installation)
